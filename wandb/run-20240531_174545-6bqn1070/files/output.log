@@ -1,0 +1,4 @@
+/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/spaces/box.py:73: UserWarning: [33mWARN: Box bound precision lowered by casting to float32
+  logger.warn(
+[INFO 17:45:47] my_main Beginning training for 2050000 timesteps
+[INFO 17:45:48] my_main t_env: 25 / 2050000

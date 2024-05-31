@@ -1,0 +1,30 @@
+/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/stdout_capturing.py:179: UserWarning: tee_stdout.wait timeout. Forcibly terminating.
+  warnings.warn("tee_stdout.wait timeout. Forcibly terminating.")
+/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/stdout_capturing.py:185: UserWarning: tee_stderr.wait timeout. Forcibly terminating.
+  warnings.warn("tee_stderr.wait timeout. Forcibly terminating.")
+[DEBUG 17:17:21] pymarl Stopping Heartbeat
+[ERROR 17:17:21] pymarl Failed after 0:00:07!
+Traceback (most recent calls WITHOUT Sacred internals):
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 158, in spec
+    return self.env_specs[id]
+KeyError: 'Foraging-8x8-2p-3f-v1'
+During handling of the above exception, another exception occurred:
+Traceback (most recent calls WITHOUT Sacred internals):
+  File "src/main.py", line 36, in my_main
+    run(_run, config, _log)
+  File "/home/shuqingshi/Downloads/epymarl/src/run.py", line 68, in run
+    run_sequential(args=args, logger=logger)
+  File "/home/shuqingshi/Downloads/epymarl/src/run.py", line 100, in run_sequential
+    runner = r_REGISTRY[args.runner](args=args, logger=logger)
+  File "/home/shuqingshi/Downloads/epymarl/src/runners/episode_runner.py", line 15, in __init__
+    self.env = env_REGISTRY[self.args.env](**self.args.env_args)
+  File "/home/shuqingshi/Downloads/epymarl/src/envs/__init__.py", line 14, in env_fn
+    return env(**kwargs)
+  File "/home/shuqingshi/Downloads/epymarl/src/envs/__init__.py", line 82, in __init__
+    self.original_env = gym.make(f"{key}", **kwargs)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 235, in make
+    return registry.make(id, **kwargs)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 128, in make
+    spec = self.spec(path)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 185, in spec
+    raise error.DeprecatedEnv(

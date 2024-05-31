@@ -1,0 +1,64 @@
+/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/stdout_capturing.py:179: UserWarning: tee_stdout.wait timeout. Forcibly terminating.
+  warnings.warn("tee_stdout.wait timeout. Forcibly terminating.")
+/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/stdout_capturing.py:185: UserWarning: tee_stderr.wait timeout. Forcibly terminating.
+  warnings.warn("tee_stderr.wait timeout. Forcibly terminating.")
+[DEBUG 16:18:46] pymarl Stopping Heartbeat
+[WARNING 16:18:46] pymarl Aborted after 0:02:01!
+Traceback (most recent call last):
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/home/shuqingshi/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher/../../debugpy/__main__.py", line 39, in <module>
+    cli.main()
+  File "/home/shuqingshi/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 430, in main
+    run()
+  File "/home/shuqingshi/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 284, in run_file
+    runpy.run_path(target, run_name="__main__")
+  File "/home/shuqingshi/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 321, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/home/shuqingshi/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 135, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/home/shuqingshi/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 124, in _run_code
+    exec(code, run_globals)
+  File "src/main.py", line 115, in <module>
+    ex.run_commandline(params)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/experiment.py", line 312, in run_commandline
+    return self.run(
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/experiment.py", line 276, in run
+    run()
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/run.py", line 238, in __call__
+    self.result = self.main_function(*args)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/config/captured_function.py", line 42, in captured_function
+    result = wrapped(*args, **kwargs)
+  File "src/main.py", line 36, in my_main
+    run(_run, config, _log)
+  File "/home/shuqingshi/Downloads/epymarl/src/run.py", line 68, in run
+    run_sequential(args=args, logger=logger)
+  File "/home/shuqingshi/Downloads/epymarl/src/run.py", line 100, in run_sequential
+    runner = r_REGISTRY[args.runner](args=args, logger=logger)
+  File "/home/shuqingshi/Downloads/epymarl/src/runners/episode_runner.py", line 15, in __init__
+    self.env = env_REGISTRY[self.args.env](**self.args.env_args)
+  File "/home/shuqingshi/Downloads/epymarl/src/envs/__init__.py", line 14, in env_fn
+    return env(**kwargs)
+  File "/home/shuqingshi/Downloads/epymarl/src/envs/__init__.py", line 82, in __init__
+    self.original_env = gym.make(f"{key}", **kwargs)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 540, in make
+    importlib.import_module(module)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1030, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1007, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 986, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 680, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 850, in exec_module
+  File "<frozen importlib._bootstrap>", line 228, in _call_with_frames_removed
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/lbforaging/__init__.py", line 12, in <module>
+    register(
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 496, in register
+    _check_spec_register(new_spec)
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 382, in _check_spec_register
+    latest_versioned_spec = max(
+  File "/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/gym/envs/registration.py", line 386, in <genexpr>
+    if spec_.namespace == spec.namespace
+KeyboardInterrupt

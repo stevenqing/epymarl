@@ -5,7 +5,7 @@ from modules.mixers.qmix import QMixer
 import torch as th
 from torch.optim import Adam
 from components.standarize_stream import RunningMeanStd
-
+import wandb
 
 class QLearner:
     def __init__(self, mac, scheme, logger, args):
@@ -134,6 +134,17 @@ class QLearner:
             self.logger.log_stat("td_error_abs", (masked_td_error.abs().sum().item()/mask_elems), t_env)
             self.logger.log_stat("q_taken_mean", (chosen_action_qvals * mask).sum().item()/(mask_elems * self.args.n_agents), t_env)
             self.logger.log_stat("target_mean", (targets * mask).sum().item()/(mask_elems * self.args.n_agents), t_env)
+
+            # wandb log
+            wandb.log({f"train/entropy_loss": loss.item()}, step=t_env)
+            wandb.log({f"train/grad_norm": grad_norm.item()}, step=t_env)
+            wandb.log({f"train/td_error_abs": (masked_td_error.abs().sum().item()/mask_elems)}, step=t_env)
+            wandb.log({f"train/q_taken_mean": (chosen_action_qvals * mask).sum().item()/(mask_elems * self.args.n_agents)}, step=t_env)
+            wandb.log({f"train/target_mean": (targets * mask).sum().item()/(mask_elems * self.args.n_agents)}, step=t_env)
+            wandb.log({f"normalized_episode_reward_mean": th.mean(th.sum(rewards,1))}, step=t_env)
+
+
+
             self.log_stats_t = t_env
 
     def _update_targets_hard(self):

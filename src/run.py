@@ -14,7 +14,8 @@ from runners import REGISTRY as r_REGISTRY
 from controllers import REGISTRY as mac_REGISTRY
 from components.episode_buffer import ReplayBuffer
 from components.transforms import OneHot
-
+import wandb
+import socket
 
 def run(_run, _config, _log):
 
@@ -50,6 +51,18 @@ def run(_run, _config, _log):
 
     # sacred is on by default
     logger.setup_sacred(_run)
+
+    # wandb
+    run = wandb.init(config=args,
+        project="epymarl",
+        entity="1160677229", 
+        notes=socket.gethostname(),
+        name=str(map_name),
+        dir="./",
+        job_type="training",
+        reinit=True)
+
+
 
     # Run and train
     run_sequential(args=args, logger=logger)

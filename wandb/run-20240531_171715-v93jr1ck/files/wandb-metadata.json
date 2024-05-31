@@ -1,0 +1,106 @@
+{
+    "os": "Linux-6.5.0-35-generic-x86_64-with-glibc2.35",
+    "python": "3.9.19",
+    "heartbeatAt": "2024-05-31T16:17:16.427426",
+    "startedAt": "2024-05-31T16:17:15.761904",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--config=qmix",
+        "--env-config=gymma",
+        "with",
+        "env_args.time_limit=25",
+        "env_args.key=lbforaging:Foraging-8x8-2p-3f-v1"
+    ],
+    "state": "running",
+    "program": "src/main.py",
+    "codePathLocal": "src/main.py",
+    "codePath": "src/main.py",
+    "git": {
+        "remote": "https://github.com/stevenqing/epymarl.git",
+        "commit": "4b743a8e038e5e6953b018d99ca00c07e612a2f0"
+    },
+    "email": null,
+    "root": "/home/shuqingshi/Downloads/epymarl",
+    "host": "nmslap007078",
+    "username": "shuqingshi",
+    "executable": "/home/shuqingshi/miniconda3/envs/epymarl/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 3120.543333333333,
+        "min": 400.0,
+        "max": 4333.333333333333
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1934.935,
+            "min": 400.0,
+            "max": 5200.0
+        },
+        {
+            "current": 1997.14,
+            "min": 400.0,
+            "max": 5200.0
+        },
+        {
+            "current": 2708.62,
+            "min": 400.0,
+            "max": 5200.0
+        },
+        {
+            "current": 1460.521,
+            "min": 400.0,
+            "max": 5200.0
+        },
+        {
+            "current": 1602.232,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 2331.343,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 2180.19,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 2378.017,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 2441.183,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 1931.825,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 1166.751,
+            "min": 400.0,
+            "max": 3900.0
+        },
+        {
+            "current": 2164.123,
+            "min": 400.0,
+            "max": 3900.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 913.7511215209961,
+            "used": 129.6700096130371
+        }
+    },
+    "memory": {
+        "total": 30.93694305419922
+    }
+}
