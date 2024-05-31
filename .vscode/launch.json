@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "python": "/home/shuqingshi/miniconda3/envs/epymarl/bin/python",
             "args": [
-                "--config=vdn",
+                "--config=ippo",
                 "--env-config=gymma",
                 "with",
                 "env_args.time_limit=25",

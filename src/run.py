@@ -57,7 +57,7 @@ def run(_run, _config, _log):
         project="epymarl",
         entity="1160677229", 
         notes=socket.gethostname(),
-        name=str(map_name),
+        name=str(map_name)+ '_' + str(_config['name']),
         dir="./",
         job_type="training",
         reinit=True)
