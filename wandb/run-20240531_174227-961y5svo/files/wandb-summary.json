@@ -1,1 +1,0 @@
-{"train/entropy_loss": 6.380612373352051, "_timestamp": 1717173822.0494561, "train/grad_norm": 63.61176300048828, "train/td_error_abs": 1.0733067321777343, "train/q_taken_mean": 6.192360229492188, "train/target_mean": 6.014551391601563, "normalized_episode_reward_mean": -1.2080589532852173, "_runtime": 74.10320711135864, "_step": 50851}
