@@ -8,7 +8,7 @@ import torch as th
 from torch.optim import Adam
 from modules.critics import REGISTRY as critic_resigtry
 from components.standarize_stream import RunningMeanStd
-
+import wandb
 
 class PPOLearner:
     def __init__(self, mac, scheme, logger, args):
@@ -119,6 +119,12 @@ class PPOLearner:
             self.logger.log_stat("pg_loss", pg_loss.item(), t_env)
             self.logger.log_stat("agent_grad_norm", grad_norm.item(), t_env)
             self.logger.log_stat("pi_max", (pi.max(dim=-1)[0] * mask).sum().item() / mask.sum().item(), t_env)
+
+            wandb.log({"train/advantage_mean": (advantages * mask).sum().item() / mask.sum().item()}, step=t_env)
+            wandb.log({"train/pg_loss": pg_loss.item()}, step=t_env)
+            wandb.log({"train/agent_grad_norm": grad_norm.item()}, step=t_env)
+            wandb.log({"train/pi_max": (pi.max(dim=-1)[0] * mask).sum().item() / mask.sum().item()}, step=t_env)
+
             self.log_stats_t = t_env
 
     def train_critic_sequential(self, critic, target_critic, batch, rewards, mask):

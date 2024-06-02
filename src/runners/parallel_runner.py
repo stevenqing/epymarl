@@ -4,7 +4,7 @@ from components.episode_buffer import EpisodeBatch
 from multiprocessing import Pipe, Process
 import numpy as np
 import torch as th
-
+import wandb
 
 # Based (very) heavily on SubprocVecEnv from OpenAI Baselines
 # https://github.com/openai/baselines/blob/master/baselines/common/vec_env/subproc_vec_env.py
@@ -208,6 +208,8 @@ class ParallelRunner:
     def _log(self, returns, stats, prefix):
         self.logger.log_stat(prefix + "return_mean", np.mean(returns), self.t_env)
         self.logger.log_stat(prefix + "return_std", np.std(returns), self.t_env)
+        wandb.log({f"{prefix}return_mean": np.mean(returns)}, step=self.t_env)
+        wandb.log({f"{prefix}return_std": np.std(returns)}, step=self.t_env)
         returns.clear()
 
         for k, v in stats.items():
