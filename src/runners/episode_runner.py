@@ -108,7 +108,6 @@ class EpisodeRunner:
 
         if test_mode and (len(self.test_returns) == self.args.test_nepisode):
             self._log(cur_returns, cur_stats, log_prefix)
-            wandb.log({"test_return_mean": np.mean(np.array(cur_returns))}, step=self.t_env)
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
             self._log(cur_returns, cur_stats, log_prefix)
             if hasattr(self.mac.action_selector, "epsilon"):
@@ -120,9 +119,12 @@ class EpisodeRunner:
     def _log(self, returns, stats, prefix):
         self.logger.log_stat(prefix + "return_mean", np.mean(returns), self.t_env)
         self.logger.log_stat(prefix + "return_std", np.std(returns), self.t_env)
+        wandb.log({f"{prefix}return_mean": np.mean(returns)}, step=self.t_env)
+        wandb.log({f"{prefix}return_std": np.std(returns)}, step=self.t_env)
         returns.clear()
 
         for k, v in stats.items():
             if k != "n_episodes":
                 self.logger.log_stat(prefix + k + "_mean" , v/stats["n_episodes"], self.t_env)
+                wandb.log({f"{prefix}{k}_mean": v/stats["n_episodes"]}, step=self.t_env)
         stats.clear()
