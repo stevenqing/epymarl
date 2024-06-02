@@ -2,7 +2,7 @@ from envs import REGISTRY as env_REGISTRY
 from functools import partial
 from components.episode_buffer import EpisodeBatch
 import numpy as np
-
+import wandb
 
 class EpisodeRunner:
 
@@ -108,6 +108,7 @@ class EpisodeRunner:
 
         if test_mode and (len(self.test_returns) == self.args.test_nepisode):
             self._log(cur_returns, cur_stats, log_prefix)
+            wandb.log({"test_return_mean": np.mean(np.array(cur_returns))}, step=self.t_env)
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:
             self._log(cur_returns, cur_stats, log_prefix)
             if hasattr(self.mac.action_selector, "epsilon"):
