@@ -49,7 +49,7 @@ class Logger:
             i += 1
             window = 5 if k != "epsilon" else 1
             try:
-                item = "{:.4f}".format(np.mean([x[1] for x in self.stats[k][-window:]]))
+                item = "{:.4f}".format(np.mean([x[1] for x in self.stats[k][-window:]]).cpu())
             except:
                 item = "{:.4f}".format(np.mean([x[1].item() for x in self.stats[k][-window:]]))
             log_str += "{:<25}{:>8}".format(k + ":", item)
