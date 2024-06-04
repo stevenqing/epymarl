@@ -16,7 +16,7 @@
                 "--env-config=gymma",
                 "with",
                 "env_args.time_limit=50",
-                "env_args.key=lbforaging:Foraging-2s-15x15-4p-3f-coop-v2"
+                "env_args.key=lbforaging:Foraging-2s-8x8-2p-3f-v2"
             ]
         }
     ]
