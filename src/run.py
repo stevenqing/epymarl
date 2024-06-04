@@ -177,7 +177,8 @@ def run_sequential(args, logger):
             runner.log_train_stats_t = runner.t_env
             evaluate_sequential(args, runner)
             logger.log_stat("episode", runner.t_env, runner.t_env)
-            logger.print_recent_stats()
+            if args.name != 'maddpg':
+                logger.print_recent_stats()
             logger.console_logger.info("Finished Evaluation")
             return
 
@@ -249,7 +250,8 @@ def run_sequential(args, logger):
 
         if (runner.t_env - last_log_T) >= args.log_interval:
             logger.log_stat("episode", episode, runner.t_env)
-            logger.print_recent_stats()
+            if args.name != 'maddpg':
+                logger.print_recent_stats()
             last_log_T = runner.t_env
 
     runner.close_env()
