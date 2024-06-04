@@ -22,7 +22,7 @@ save_model: False # Save the models to disk
 save_model_interval: 50000 # Save models after this many timesteps
 checkpoint_path: "results/models/ippo_seed124117851_lbforaging:Foraging-15x15-3p-5f-v2_2024-06-04 11:53:45.891112" # Load a checkpoint from this path
 evaluate: True # Evaluate model for test_nepisode episodes and quit (no training)
-render: True # Render the environment when evaluating (only when evaluate == True)
+render: False # Render the environment when evaluating (only when evaluate == True)
 load_step: 50000 # Load model trained on this many timesteps (0 if choose max possible)
 save_replay: False # Saving the replay of the model loaded from checkpoint_path
 local_results_path: "results" # Path for local results
