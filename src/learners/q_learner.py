@@ -2,6 +2,7 @@ import copy
 from components.episode_buffer import EpisodeBatch
 from modules.mixers.vdn import VDNMixer
 from modules.mixers.qmix import QMixer
+from modules.mixers.ddn import DDNMixer
 import torch as th
 from torch.optim import Adam
 from components.standarize_stream import RunningMeanStd
@@ -22,6 +23,8 @@ class QLearner:
                 self.mixer = VDNMixer()
             elif args.mixer == "qmix":
                 self.mixer = QMixer(args)
+            elif args.mixer == "ddn":
+                self.mixer = DDNMixer(args)
             else:
                 raise ValueError("Mixer {} not recognised.".format(args.mixer))
             self.params += list(self.mixer.parameters())
@@ -59,7 +62,10 @@ class QLearner:
         mac_out = []
         self.mac.init_hidden(batch.batch_size)
         for t in range(batch.max_seq_length):
-            agent_outs = self.mac.forward(batch, t=t)
+            if self.args.agent == "iqn_rnn":
+                agent_outs, rnd_quantiles = self.mac.forward(batch, t=t, forward_type="approx")
+            else:
+                agent_outs = self.mac.forward(batch, t=t)
             mac_out.append(agent_outs)
         mac_out = th.stack(mac_out, dim=1)  # Concat over time
         # Pick the Q-Values for the actions taken by each agent
@@ -69,7 +75,10 @@ class QLearner:
         target_mac_out = []
         self.target_mac.init_hidden(batch.batch_size)
         for t in range(batch.max_seq_length):
-            target_agent_outs = self.target_mac.forward(batch, t=t)
+            if self.args.agent == "iqn_rnn":
+                target_agent_outs, _ = self.target_mac.forward(batch, t=t, forward_type="approx")
+            else:
+                target_agent_outs = self.target_mac.forward(batch, t=t)
             target_mac_out.append(target_agent_outs)
 
         # We don't need the first timesteps Q-Value estimate for calculating targets
