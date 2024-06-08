@@ -147,7 +147,7 @@ class IQNLearner:
         assert target_max_qvals.shape == (batch.batch_size, episode_length, self.args.n_agents, self.n_target_quantiles)
 
         if self.args.mixer == "dplex":
-            cur_max_actions_onehot = th.zeros(cur_max_actions.squeeze(3).shape + (self.args.n_actions,)).to(self.device)
+            cur_max_actions_onehot = th.zeros(cur_max_actions.squeeze(3).shape + (self.args.n_actions,)).cuda()
             cur_max_actions_onehot = cur_max_actions_onehot.scatter_(3, cur_max_actions, 1)
 
         # Mix
@@ -205,7 +205,7 @@ class IQNLearner:
         del tau
         assert abs_weight.shape == (batch.batch_size, episode_length, n_quantile_groups, self.n_quantiles, self.n_target_quantiles)
         # Huber loss
-        loss = F.smooth_l1_loss(u, th.zeros(u.shape).to(self.device), reduction='none')
+        loss = F.smooth_l1_loss(u, th.zeros(u.shape).cuda(), reduction='none')
         del u
         assert loss.shape == (batch.batch_size, episode_length, n_quantile_groups, self.n_quantiles, self.n_target_quantiles)
         # Quantile Huber loss
@@ -244,11 +244,11 @@ class IQNLearner:
         self.logger.console_logger.info("Updated target network")
 
     def cuda(self):
-        self.mac.to(self.device)
-        self.target_mac.to(self.device)
+        self.mac.cuda()
+        self.target_mac.cuda()
         if self.mixer is not None:
-            self.mixer.to(self.device)
-            self.target_mixer.to(self.device)
+            self.mixer.cuda()
+            self.target_mixer.cuda()
 
     def save_models(self, path):
         self.mac.save_models(path)
