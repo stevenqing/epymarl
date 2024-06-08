@@ -26,7 +26,7 @@ class BasicMAC:
         if self.args.agent == "iqn_rnn":
             agent_outputs, rnd_quantiles = self.forward(ep_batch, t_ep, forward_type="approx")
         else:
-            agent_outputs = self.forward(ep_batch, t_ep, forward_type=test_mode)
+            agent_outputs = self.forward(ep_batch, t_ep, test_mode=test_mode)
         if self.args.agent == "iqn_rnn":
             agent_outputs = agent_outputs.view(ep_batch.batch_size, self.n_agents, self.args.n_actions, -1).mean(dim=3)
         chosen_actions = self.action_selector.select_action(agent_outputs[bs], avail_actions[bs], t_env, test_mode=test_mode)
@@ -51,17 +51,18 @@ class BasicMAC:
         # add from the distributional project
             if not forward_type:
                 # Epsilon floor
-                epsilon_action_num = agent_outs.size(-1)
-                if getattr(self.args, "mask_before_softmax", True):
-                    # With probability epsilon, we will pick an available action uniformly
-                    epsilon_action_num = reshaped_avail_actions.sum(dim=1, keepdim=True).float()
+                if self.args.agent == "iqn_rnn":
+                    epsilon_action_num = agent_outs.size(-1)
+                    if getattr(self.args, "mask_before_softmax", True):
+                        # With probability epsilon, we will pick an available action uniformly
+                        epsilon_action_num = reshaped_avail_actions.sum(dim=1, keepdim=True).float()
 
-                agent_outs = ((1 - self.action_selector.epsilon) * agent_outs
-                               + th.ones_like(agent_outs) * self.action_selector.epsilon/epsilon_action_num)
+                    agent_outs = ((1 - self.action_selector.epsilon) * agent_outs
+                                + th.ones_like(agent_outs) * self.action_selector.epsilon/epsilon_action_num)
 
-                if getattr(self.args, "mask_before_softmax", True):
-                    # Zero out the unavailable actions
-                    agent_outs[reshaped_avail_actions == 0] = 0.0
+                    if getattr(self.args, "mask_before_softmax", True):
+                        # Zero out the unavailable actions
+                        agent_outs[reshaped_avail_actions == 0] = 0.0
         if self.args.agent == "iqn_rnn":
             return agent_outs, rnd_quantiles
         else:

@@ -12,11 +12,11 @@
             "console": "integratedTerminal",
             "python": "/home/shuqingshi/miniconda3/envs/epymarl/bin/python",
             "args": [
-                "--config=qmix",
+                "--config=maa2c",
                 "--env-config=gymma",
                 "with",
                 "env_args.time_limit=25",
-                "env_args.key=lbforaging:Foraging-2s-8x8-2p-3f-v2"
+                "env_args.key=lbforaging:Foraging-8x8-3p-3f-v2"
             ]
         }
     ]

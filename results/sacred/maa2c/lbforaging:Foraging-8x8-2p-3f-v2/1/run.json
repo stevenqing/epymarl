@@ -1,0 +1,112 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/home/shuqingshi/Downloads/epymarl/src",
+    "dependencies": [
+      "numpy==1.26.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.5",
+      "torch==2.3.0"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "8265e9d402c9d8e5d39f388246c1274f7a18c97d",
+        "dirty": true,
+        "url": "https://github.com/stevenqing/epymarl.git"
+      },
+      {
+        "commit": "8265e9d402c9d8e5d39f388246c1274f7a18c97d",
+        "dirty": true,
+        "url": "https://github.com/stevenqing/epymarl.git"
+      },
+      {
+        "commit": "8265e9d402c9d8e5d39f388246c1274f7a18c97d",
+        "dirty": true,
+        "url": "https://github.com/stevenqing/epymarl.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_10bb275063c412d8d7ce9641d9c0d4b0.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_f5ea57d91e6d6c68eacce7efdc3506a2.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_7799699b534f806632c1d618a6ef7e02.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/shuqingshi/miniconda3/envs/epymarl/lib/python3.9/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"src/main.py\", line 36, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/shuqingshi/Downloads/epymarl/src/run.py\", line 68, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/shuqingshi/Downloads/epymarl/src/run.py\", line 199, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/home/shuqingshi/Downloads/epymarl/src/runners/parallel_runner.py\", line 104, in run\n    actions = self.mac.select_actions(self.batch, t_ep=self.t, t_env=self.t_env, bs=envs_not_terminated, test_mode=test_mode)\n",
+    "  File \"/home/shuqingshi/Downloads/epymarl/src/controllers/basic_controller.py\", line 29, in select_actions\n    agent_outputs = self.forward(ep_batch, t_ep, forward_type=test_mode)\n",
+    "  File \"/home/shuqingshi/Downloads/epymarl/src/controllers/basic_controller.py\", line 59, in forward\n    agent_outs = ((1 - self.action_selector.epsilon) * agent_outs\n",
+    "AttributeError: 'SoftPoliciesSelector' object has no attribute 'epsilon'\n"
+  ],
+  "heartbeat": "2024-06-08T14:59:07.248340",
+  "host": {
+    "ENV": {},
+    "cpu": "13th Gen Intel(R) Core(TM) i7-1365U",
+    "hostname": "nmslap007078",
+    "os": [
+      "Linux",
+      "Linux-6.5.0-35-generic-x86_64-with-glibc2.35"
+    ],
+    "python_version": "3.9.19"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "env_args": {
+        "key": "lbforaging:Foraging-8x8-2p-3f-v2",
+        "time_limit": 25
+      }
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.time_limit=25",
+        "env_args.key=lbforaging:Foraging-8x8-2p-3f-v2"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2024-06-08T14:58:52.065333",
+  "status": "FAILED",
+  "stop_time": "2024-06-08T14:59:07.254565"
+}
