@@ -34,3 +34,5 @@ quantile_embed_dim: 64 # n in paper
 n_quantiles: 1 # N in paper
 n_target_quantiles: 1 # N' in paper
 n_approx_quantiles: 32 # \hat{N} in paper, for approximating Q
+
+t_max: 20050000
