@@ -37,3 +37,5 @@ sample_size: 10
 alpha_lr: 0.001
 # name of module
 name: "shaq"
+
+t_max: 20050000
