@@ -67,20 +67,20 @@ class SHAQMixer(nn.Module):
                 [1., 0., 0.]]]])
         """
         # cuda version
-        # seq_set = th.tril(th.ones(self.n_agents, self.n_agents).cuda(), diagonal=0, out=None)
-        # grand_coalitions_pos = th.multinomial(th.ones(batch_size*self.sample_size, 
-        #                                   self.n_agents).cuda()/self.n_agents, 
-        #                                   self.n_agents, 
-        #                                   replacement=False)
-        # individual_map = th.zeros(batch_size*self.sample_size*self.n_agents, self.n_agents).cuda()
-
-        # cpu version
-        seq_set = th.tril(th.ones(self.n_agents, self.n_agents), diagonal=0, out=None)
+        seq_set = th.tril(th.ones(self.n_agents, self.n_agents).cuda(), diagonal=0, out=None)
         grand_coalitions_pos = th.multinomial(th.ones(batch_size*self.sample_size, 
-                                          self.n_agents)/self.n_agents, 
+                                          self.n_agents).cuda()/self.n_agents, 
                                           self.n_agents, 
                                           replacement=False)
-        individual_map = th.zeros(batch_size*self.sample_size*self.n_agents, self.n_agents)
+        individual_map = th.zeros(batch_size*self.sample_size*self.n_agents, self.n_agents).cuda()
+
+        # cpu version
+        # seq_set = th.tril(th.ones(self.n_agents, self.n_agents), diagonal=0, out=None)
+        # grand_coalitions_pos = th.multinomial(th.ones(batch_size*self.sample_size, 
+        #                                   self.n_agents)/self.n_agents, 
+        #                                   self.n_agents, 
+        #                                   replacement=False)
+        # individual_map = th.zeros(batch_size*self.sample_size*self.n_agents, self.n_agents)
         individual_map.scatter_(1, grand_coalitions_pos.contiguous().view(-1, 1), 1)
         individual_map = individual_map.contiguous().view(batch_size, self.sample_size, self.n_agents, self.n_agents)
         subcoalition_map = th.matmul(individual_map, seq_set)
@@ -96,17 +96,17 @@ class SHAQMixer(nn.Module):
         # grand_coalitions = th.stack(grand_coalitions, dim=0).to(self.device)
 
         # cuda version
-        # offset = (th.arange(batch_size*self.sample_size)*self.n_agents).reshape(-1, 1).cuda()
-        # grand_coalitions_pos_alter = grand_coalitions_pos + offset
-        # grand_coalitions = th.zeros_like(grand_coalitions_pos_alter.flatten()).cuda()
-        # grand_coalitions[grand_coalitions_pos_alter.flatten()] = th.arange(batch_size*self.sample_size*self.n_agents).cuda()
+        offset = (th.arange(batch_size*self.sample_size)*self.n_agents).reshape(-1, 1).cuda()
+        grand_coalitions_pos_alter = grand_coalitions_pos + offset
+        grand_coalitions = th.zeros_like(grand_coalitions_pos_alter.flatten()).cuda()
+        grand_coalitions[grand_coalitions_pos_alter.flatten()] = th.arange(batch_size*self.sample_size*self.n_agents).cuda()
 
         # cpu version
-        offset = (th.arange(batch_size*self.sample_size)*self.n_agents).reshape(-1, 1)
-        grand_coalitions_pos_alter = grand_coalitions_pos + offset
-        grand_coalitions = th.zeros_like(grand_coalitions_pos_alter.flatten())
-        grand_coalitions[grand_coalitions_pos_alter.flatten()] = th.arange(batch_size*self.sample_size*self.n_agents)
-        grand_coalitions = grand_coalitions.reshape(batch_size*self.sample_size, self.n_agents) - offset
+        # offset = (th.arange(batch_size*self.sample_size)*self.n_agents).reshape(-1, 1)
+        # grand_coalitions_pos_alter = grand_coalitions_pos + offset
+        # grand_coalitions = th.zeros_like(grand_coalitions_pos_alter.flatten())
+        # grand_coalitions[grand_coalitions_pos_alter.flatten()] = th.arange(batch_size*self.sample_size*self.n_agents)
+        # grand_coalitions = grand_coalitions.reshape(batch_size*self.sample_size, self.n_agents) - offset
 
         grand_coalitions = grand_coalitions.unsqueeze(1).expand(batch_size*self.sample_size, 
                                                                 self.n_agents, 
