@@ -8,6 +8,7 @@ from .maddpg_learner import MADDPGLearner
 from .ppo_learner import PPOLearner
 from .iqn_learner import IQNLearner
 from .shaq_learner import SHAQLearner
+from .coalition_ppo_learner import CoalitionPPOLearner
 REGISTRY = {}
 
 REGISTRY["q_learner"] = QLearner
@@ -20,3 +21,4 @@ REGISTRY["pac_learner"] = PACActorCriticLearner
 REGISTRY["pac_dcg_learner"] = PACDCGLearner
 REGISTRY["iqn_learner"] = IQNLearner
 REGISTRY["shaq_learner"] = SHAQLearner
+REGISTRY["coalition_ppo_learner"] = CoalitionPPOLearner

@@ -10,7 +10,7 @@ from modules.critics import REGISTRY as critic_resigtry
 from components.standarize_stream import RunningMeanStd
 import wandb
 
-class PPOLearner:
+class CoalitionPPOLearner:
     def __init__(self, mac, scheme, logger, args):
         self.args = args
         self.n_agents = args.n_agents
@@ -46,6 +46,9 @@ class PPOLearner:
         terminated = batch["terminated"][:, :-1].float()
         mask = batch["filled"][:, :-1].float()
         mask[:, 1:] = mask[:, 1:] * (1 - terminated[:, :-1])
+
+        # LBF reward allocaion
+        reward_mask = th.cat((batch["obs"][:,:,0,-7].unsqueeze(-1),batch["obs"][:,:,0,-4].unsqueeze(-1),batch["obs"][:,:,0,-1].unsqueeze(-1)),dim=2)
     
         actions = actions[:, :-1]
         if self.args.standardise_rewards:
@@ -78,9 +81,10 @@ class PPOLearner:
             mac_out = th.stack(mac_out, dim=1)  # Concat over time
 
             pi = mac_out
+            # advantages, critic_train_stats = self.train_critic_sequential(self.critic, self.target_critic, batch, rewards,
+            #                                                               critic_mask)
             advantages, critic_train_stats = self.train_critic_sequential(self.critic, self.target_critic, batch, rewards,
-                                                                          critic_mask)
-
+                                                                          reward_mask)
             advantages = advantages.detach()
             # Calculate policy grad with mask
 
@@ -153,7 +157,7 @@ class PPOLearner:
 
         v = critic(batch)[:, :-1].squeeze(3)
         td_error = (target_returns.detach() - v)
-        masked_td_error = td_error * mask
+        masked_td_error = td_error * mask[:,:td_error.shape[1],:]
         loss = (masked_td_error ** 2).sum() / mask.sum()
 
         self.critic_optimiser.zero_grad()
@@ -165,8 +169,8 @@ class PPOLearner:
         running_log["critic_grad_norm"].append(grad_norm.item())
         mask_elems = mask.sum().item()
         running_log["td_error_abs"].append((masked_td_error.abs().sum().item() / mask_elems))
-        running_log["q_taken_mean"].append((v * mask).sum().item() / mask_elems)
-        running_log["target_mean"].append((target_returns * mask).sum().item() / mask_elems)
+        # running_log["q_taken_mean"].append((v * mask).sum().item() / mask_elems)
+        # running_log["target_mean"].append((target_returns * mask).sum().item() / mask_elems)
 
         return masked_td_error, running_log
 
