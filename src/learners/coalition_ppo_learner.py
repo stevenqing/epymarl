@@ -48,7 +48,9 @@ class CoalitionPPOLearner:
         mask[:, 1:] = mask[:, 1:] * (1 - terminated[:, :-1])
 
         # LBF reward allocaion
-        reward_mask = th.cat((batch["obs"][:,:,0,-7].unsqueeze(-1),batch["obs"][:,:,0,-4].unsqueeze(-1),batch["obs"][:,:,0,-1].unsqueeze(-1)),dim=2)
+        total_level = (batch["obs"][:,:,0,-7] + batch["obs"][:,:,0,-4] + batch["obs"][:,:,0,-1]).unsqueeze(-1)
+        total_level += 0.0000001
+        reward_mask = th.cat((batch["obs"][:,:,0,-7].unsqueeze(-1)/total_level,batch["obs"][:,:,0,-4].unsqueeze(-1)/total_level,batch["obs"][:,:,0,-1].unsqueeze(-1)/total_level),dim=2)
     
         actions = actions[:, :-1]
         if self.args.standardise_rewards:
